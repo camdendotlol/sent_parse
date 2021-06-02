@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Camden Mecklem"]
 edition = "2018"
 license = "MIT"
+description = "Presentation parsing library based on suckless sent"
+homepage = "https://github.com/mythmakerseven/sent_parse"
+repository = "https://github.com/mythmakerseven/sent_parse"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

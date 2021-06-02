@@ -38,6 +38,7 @@ pub fn generate_slides(full_text: String) -> Vec<Slide> {
             '@' => slides.push(Slide::ImageSlide(ImageSlide::new(s))),
             // Lines beginning with # are comments, so the parser should do nothing
             '#' => {},
+            // Lines beginning with / are empty slides, used e.g. for pacing or section divisions
             '/' => slides.push(Slide::EmptySlide),
             // Everything else is just regular text
             _ => slides.push(Slide::TextSlide(TextSlide::new(s)))
