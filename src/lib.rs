@@ -1,3 +1,5 @@
+/// TextSlide represents a standard, non-image slide.
+/// It contains a ``text`` field with the text of the slide.
 pub struct TextSlide {
     text: String
 }
@@ -8,6 +10,8 @@ impl TextSlide {
     }
 }
 
+
+/// ImageSlide contains an ``image_path`` property that represents the location of the image on disk.
 pub struct ImageSlide {
     image_path: String
 }
@@ -20,12 +24,18 @@ impl ImageSlide {
     }
 }
 
+/// There are three types of slides. ``TextSlide``, ``ImageSlide``, and ``EmptySlide``.
+/// Empty slides are meant to be blank, with no text or images.
 pub enum Slide {
     TextSlide(TextSlide),
     ImageSlide(ImageSlide),
     EmptySlide
 }
 
+/// This function accepts a string and returns a ``Vec`` containing ``Slide`` instances.
+/// ``generate_slides`` is very un-opinionated, meaning you can use it in a lot more ways than
+/// the classic Suckless sent program. Currently, programs using this crate must implement
+/// display functionality for ``TextSlide``, ``ImageSlide``, and ``EmptySlide``.
 pub fn generate_slides(full_text: String) -> Vec<Slide> {
     // Lines starting with # are comments, so the parser ignores them
     let text_minus_comments: String = full_text
