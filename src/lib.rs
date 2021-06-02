@@ -27,8 +27,18 @@ pub enum Slide {
 }
 
 pub fn generate_slides(full_text: String) -> Vec<Slide> {
+    // Lines starting with # are comments, so the parser ignores them
+    let text_minus_comments: String = full_text
+        .lines()
+        .filter(|&line| line.len() == 0 || line.chars().nth(0).unwrap() != '#')
+        .map(|line | format!("{}\n", line))
+        .collect();
+
     // Get the text for each slide, with newlines stripped
-    let slides_text: Vec<&str> = full_text.split("\n\n").map(|s| s.trim()).collect();
+    let slides_text: Vec<&str> = text_minus_comments
+        .split("\n\n")
+        .map(|s| s.trim())
+        .collect();
 
     // Put the slides together in the slide struct
     let mut slides: Vec<Slide> = Vec::new();
@@ -36,8 +46,6 @@ pub fn generate_slides(full_text: String) -> Vec<Slide> {
         match s.chars().nth(0).unwrap() {
             // Starting with @ denotes an image slide with a path (e.g. @nyan.png)
             '@' => slides.push(Slide::ImageSlide(ImageSlide::new(s))),
-            // Lines beginning with # are comments, so the parser should do nothing
-            '#' => {},
             // Lines beginning with / are empty slides, used e.g. for pacing or section divisions
             '/' => slides.push(Slide::EmptySlide),
             // Everything else is just regular text
